@@ -1,0 +1,11 @@
+{
+  "name": "sbs-v2-prototype",
+  "version": "1.0.0",
+  "description": "Prototype for side by side v2 for the Qwilr editor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vivian Li <l.vivian.93@gmail.com> (https://viv-li.github.io/)",
+  "license": "ISC"
+}
