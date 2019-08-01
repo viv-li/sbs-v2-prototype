@@ -44,13 +44,14 @@ interact(".resize-sbs")
     modifiers: [
       interact.modifiers.restrictSize({
         min: { width: 50 },
-        max: { width: 480 }
+        max: { width: 472 }
       })
     ],
 
     inertia: true
   })
   .on("resizemove", function(event) {
+    console.log(event);
     var target = event.target;
     var x = parseFloat(target.getAttribute("data-x")) || 0;
     var y = parseFloat(target.getAttribute("data-y")) || 0;
@@ -67,19 +68,44 @@ interact(".resize-sbs")
   });
 
 window.editorFns = {
-  onClick: e => {
+  unselectAllWidgets: () => {
     for (let el of document.getElementsByClassName("image-resizer")) {
       el.classList.remove("selected");
     }
+    for (let el of document.getElementsByClassName("sbs")) {
+      el.classList.remove("selected");
+    }
+  },
+  onClick: e => {
+    window.editorFns.unselectAllWidgets();
   },
   onKeyDown: e => {
     const key = event.key; // const {key} = event; ES6+
     if (key === "Backspace" || key === "Delete") {
-      const selectedImage = document.querySelector(".image-resizer.selected");
-      if (selectedImage !== null) {
-        selectedImage.remove();
+      const selectedWidget = document.querySelector(".selected");
+      if (selectedWidget !== null) {
+        e.preventDefault();
+        selectedWidget.remove();
+      }
+      return false;
+    } else if (key === "Enter") {
+      const selectedWidget = document.querySelector(".selected");
+      if (selectedWidget !== null) {
+        e.preventDefault();
+        const $newLine = $(
+          `<p
+              contenteditable="true"
+              onkeydown="window.editorFns.onKeyDownEditor(event)"
+              onfocus="window.editorFns.onFocusEditor(event)"
+              onblur="window.editorFns.onBlurEditor(event)"
+            ></p>`
+        );
+        $newLine.insertAfter(selectedWidget);
+        $newLine.focus();
+        return false;
       }
     }
+    return true;
   },
   onClickImage: e => {
     e.stopPropagation();
@@ -89,6 +115,7 @@ window.editorFns = {
     const key = event.key; // const {key} = event; ES6+
     if (key === "Enter") {
       e.preventDefault();
+      e.stopPropagation();
       const $newLine = $(
         `<p
             contenteditable="true"
@@ -118,6 +145,7 @@ window.editorFns = {
   },
   onFocusEditor: e => {
     const elWA = document.getElementById("widget-adder");
+    window.editorFns.unselectAllWidgets();
 
     // hide sbs option if in sbs
     if (e.target.closest(".sbs") !== null) {
@@ -149,7 +177,7 @@ window.editorFns = {
   onClickAddImage: e => {
     e.preventDefault();
     const $imageResizer = $(
-      `<div class="image-resizer" onclick="window.editorFns.onClickImage(event)">
+      `<div class="image-resizer">
         <div class="resize-handle resize-top resize-left"></div>
         <div class="resize-handle resize-top resize-right"></div>
         <div class="resize-handle resize-bottom resize-left"></div>
@@ -171,16 +199,17 @@ window.editorFns = {
     elImg.onload = function() {
       // Get image width and set the resizer to that width
       const width = elImg.width;
-      $imageResizer.style.width = width;
+      $imageResizer.width(width);
     };
     elImg.src = imageUrl;
+    elImg.addEventListener("click", window.editorFns.onClickImage);
     $imageResizer.append(elImg);
     $imageResizer.insertBefore(window.lastFocussedLine);
   },
   onClickAddSbs: e => {
     e.preventDefault();
     const $sbs = $(
-      `<div class="sbs">
+      `<div class="sbs" onclick="window.editorFns.onClickSbs(event)">
         <div class="sbs-left">
           <h1
             contenteditable="true"
@@ -232,11 +261,11 @@ window.editorFns = {
   },
 
   onClickImagePlaceholder: e => {
-    e.preventDefault();
+    e.stopPropagation();
     const elImagePlaceholder = e.target.closest(".image-placeholder");
 
     const $imageResizer = $(
-      `<div class="image-resizer resize-sbs" onclick="window.editorFns.onClickImage(event)">
+      `<div class="image-resizer resize-sbs">
         <div class="resize-handle resize-top resize-left"></div>
         <div class="resize-handle resize-top resize-right"></div>
         <div class="resize-handle resize-bottom resize-left"></div>
@@ -250,20 +279,34 @@ window.editorFns = {
     }
     var elImg = new Image();
     elImg.src = imageUrl;
-    $imageResizer.width("480px");
+    elImg.addEventListener("click", window.editorFns.onClickImage);
+    $imageResizer.width("472px");
     $imageResizer.append(elImg);
     $imageResizer.insertAfter(elImagePlaceholder);
     elImagePlaceholder.remove();
   },
   onClickDeleteImagePlaceholder: e => {
-    e.preventDefault();
     e.stopPropagation();
     const elImagePlaceholder = e.target.closest(".image-placeholder");
     elImagePlaceholder.remove();
   },
 
   onClickSwapColumnsButton: e => {
+    e.stopPropagation();
     e.target.closest(".sbs").classList.toggle("reverse");
+  },
+
+  onClickSbs: e => {
+    e.stopPropagation();
+
+    for (let el of document.getElementsByClassName("image-resizer")) {
+      el.classList.remove("selected");
+    }
+
+    if (e.target.contentEditable !== "true") {
+      const elSbs = e.target.closest(".sbs");
+      elSbs.classList.toggle("selected");
+    }
   }
 };
 

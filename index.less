@@ -86,13 +86,18 @@
   margin: auto;
   color: @midnight;
 
+  img {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
   h1 {
     padding: 0;
     margin-bottom: 16px;
 
     &:empty:before {
-      content: "Go ahead and start typing";
+      content: "I am a prototype";
       opacity: 0.25;
       position: absolute;
     }
@@ -100,7 +105,7 @@
   
   p {
     &:empty:before {
-      content: "+ to add more content";
+      content: "Please use me kindly";
       opacity: 0.5;
       position: absolute;
     }
@@ -125,6 +130,7 @@
       box-shadow: 0 0 0 4px fade(@blue, 50%);
       .resize-handle {
         display: inline-block;
+        z-index: 1;
       }
     }
     
@@ -178,7 +184,7 @@
 
     .sbs-left, .sbs-right {
       width: 50%;
-      padding: 20px;
+      padding: 24px;
     }
 
     .image-placeholder {
@@ -191,6 +197,7 @@
       cursor: pointer;
       position: relative;
       border-radius: 4px;
+      margin-bottom: 16px;
 
       .delete-button {
         position: absolute;
@@ -206,7 +213,7 @@
       top: 50%;
       transform: translate(-50%, -50%);
       cursor: pointer;
-      height: 100%;
+      height: ~"calc(100% - 48px)";
       opacity: 0;
       transition: all 0.15s ease-out;
       
