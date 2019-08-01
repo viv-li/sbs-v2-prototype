@@ -1,4 +1,4 @@
-interact(".image-resize")
+interact(".image-resizer")
   .resizable({
     edges: {
       top: ".resize-top",
@@ -41,14 +41,14 @@ interact(".image-resize")
 
 window.editorFns = {
   onClick: e => {
-    for (let el of document.getElementsByClassName("image-resize")) {
+    for (let el of document.getElementsByClassName("image-resizer")) {
       el.classList.remove("selected");
     }
   },
   onKeyDown: e => {
     const key = event.key; // const {key} = event; ES6+
     if (key === "Backspace" || key === "Delete") {
-      const selectedImage = document.querySelector(".image-resize.selected");
+      const selectedImage = document.querySelector(".image-resizer.selected");
       if (selectedImage !== null) {
         selectedImage.remove();
       }
@@ -56,7 +56,7 @@ window.editorFns = {
   },
   onClickImage: e => {
     e.stopPropagation();
-    e.target.closest(".image-resize").classList.toggle("selected");
+    e.target.closest(".image-resizer").classList.toggle("selected");
   },
   onKeyDownEditor: e => {
     const key = event.key; // const {key} = event; ES6+
@@ -91,6 +91,7 @@ window.editorFns = {
     const { top, height } = e.target.getBoundingClientRect();
 
     elWA.style.top = `${top + height / 2}px`;
+    window.lastFocussedLine = e.target;
   },
   onBlurEditor: e => {
     if (e.target.id !== "widget-adder") {
@@ -106,6 +107,35 @@ window.editorFns = {
   },
   onClickAddImage: e => {
     e.preventDefault();
+    const $imageResizer = $(
+      `<div class="image-resizer" onclick="window.editorFns.onClickImage(event)">
+        <div class="resize-handle resize-top resize-left"></div>
+        <div class="resize-handle resize-top resize-right"></div>
+        <div class="resize-handle resize-bottom resize-left"></div>
+        <div class="resize-handle resize-bottom resize-right"></div>
+      </div>`
+    );
+
+    let imageUrl = prompt("Enter image url: ");
+    var elImg = new Image();
+    elImg.onload = function() {
+      // Get image width and set the resizer to that width
+      const width = img.width;
+      $imageResizer.style.width = width;
+    };
+    elImg.src = imageUrl;
+    $imageResizer.append(elImg);
+
+    const $newLine = $(
+      `<p
+        contenteditable="true"
+        onkeydown="window.editorFns.onKeyDownEditor(event)"
+        onfocus="window.editorFns.onFocusEditor(event)"
+        onblur="window.editorFns.onBlurEditor(event)"
+      ></p>`
+    );
+    $imageResizer.insertAfter(window.lastFocussedLine);
+    $newLine.insertAfter($image);
   },
   onClickAddSbs: e => {
     e.preventDefault();

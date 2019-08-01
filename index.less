@@ -103,7 +103,8 @@
     outline: none;
   }
   
-  .image-resize {
+  .image-resizer {
+    width: fit-content;
     position: relative;
     transition: all 0.15s ease-out;
     cursor: pointer;
@@ -115,13 +116,12 @@
     &.selected {
       box-shadow: 0 0 0 4px fade(@blue, 50%);
       .resize-handle {
-        opacity: 1;
+        display: inline-block;
       }
     }
     
     .resize-handle {
-      transition: all 0.15s ease-out;
-      opacity: 0;
+      display: none;
       position: absolute;
       width: 20px;
       height: 20px;
@@ -146,7 +146,7 @@
     }
 
     img {
-      width: 100%;
+      width: 100%; // SO it fills the image resizer
     }
   }
 }
