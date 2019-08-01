@@ -109,6 +109,11 @@ window.editorFns = {
   },
   onClickImage: e => {
     e.stopPropagation();
+
+    for (let el of document.getElementsByClassName("sbs")) {
+      el.classList.remove("selected");
+    }
+
     e.target.closest(".image-resizer").classList.toggle("selected");
   },
   onKeyDownEditor: e => {
