@@ -240,6 +240,10 @@ window.editorFns = {
             onblur="window.editorFns.onBlurEditor(event)"
           ></p>
         </div>
+        <img
+          class="swap-columns-button"
+          src="assets/images/swap-columns-button.svg"
+          onclick="window.editorFns.onClickSwapColumnsButton(event)">
       </div>`
     );
 
@@ -285,6 +289,10 @@ window.editorFns = {
     e.stopPropagation();
     const elImagePlaceholder = e.target.closest(".image-placeholder");
     elImagePlaceholder.remove();
+  },
+
+  onClickSwapColumnsButton: e => {
+    e.target.closest(".sbs").classList.toggle("reverse");
   }
 };
 

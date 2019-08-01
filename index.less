@@ -162,6 +162,11 @@
     margin: 24px -120px;
     display: flex;
     border-radius: 4px;
+    position: relative;
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
 
     &:hover {
       box-shadow: 0 0 0 4px fade(@blue, 25%);
@@ -171,7 +176,7 @@
       box-shadow: 0 0 0 4px fade(@blue, 50%);
     }
 
-    > * {
+    .sbs-left, .sbs-right {
       width: 50%;
       padding: 20px;
     }
@@ -191,6 +196,22 @@
         position: absolute;
         top: 0;
         right: 0;
+      }
+    }
+
+    .swap-columns-button {
+      position: absolute;
+      width: 45px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      height: 100%;
+      opacity: 0;
+      transition: all 0.15s ease-out;
+      
+      &:hover {
+        opacity: 1;
       }
     }
   }
