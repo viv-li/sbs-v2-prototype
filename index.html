@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="utf-8" />
+    <title>Side by side v2 prototype</title>
+    <meta
+      name="description"
+      content="Prototype for side by side v2 for the Qwilr editor"
+    />
+    <meta name="author" content="Vivian Li" />
+    <link rel="stylesheet/less" type="text/css" href="index.less" />
+  </head>
 
-  <title>Side by side v2 prototype</title>
-  <meta name="description" content="Prototype for side by side v2 for the Qwilr editor" />
-  <meta name="author" content="Vivian Li" />
-  <link rel="stylesheet/less" type="text/css" href="index.less" />
-</head>
-
-<body class="container">
-  Hello, World!
-  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
-  <script type="module" src="index.js"></script>
-</body>
-
+  <body class="container">
+    <div class="editor">
+      <div id="widget-adder">
+        <button onmousedown="window.editorFns.onClickWidgetAdder(event)">
+          +
+        </button>
+        <ul>
+          <li onmousedown="window.editorFns.onClickAddImage(event)">Image</li>
+          <li onmousedown="window.editorFns.onClickAddSbs(event)">
+            Side by side
+          </li>
+        </ul>
+      </div>
+      <h1
+        class="undeletable"
+        contenteditable="true"
+        onkeydown="window.editorFns.onKeyDownEditor(event)"
+        onfocus="window.editorFns.onFocusEditor(event)"
+        onblur="window.editorFns.onBlurEditor(event)"
+      ></h1>
+      <p
+        class="undeletable"
+        contenteditable="true"
+        onkeydown="window.editorFns.onKeyDownEditor(event)"
+        onfocus="window.editorFns.onFocusEditor(event)"
+        onblur="window.editorFns.onBlurEditor(event)"
+      ></p>
+      <div class="image-resize" onclick="window.editorFns.onClickImage(event)">
+        <img class="image" width="400" src="assets/images/landscape.jpg" />
+        <div class="resize-handle resize-top resize-left"></div>
+        <div class="resize-handle resize-top resize-right"></div>
+        <div class="resize-handle resize-bottom resize-left"></div>
+        <div class="resize-handle resize-bottom resize-right"></div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+    <script type="module" src="index.js"></script>
+  </body>
 </html>
