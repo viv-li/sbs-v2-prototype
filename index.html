@@ -14,18 +14,17 @@
   </head>
 
   <body class="container">
+    <div id="widget-adder">
+      <button onmousedown="window.editorFns.onClickWidgetAdder(event)"></button>
+      <ul>
+        <li onmousedown="window.editorFns.onClickAddImage(event)">Image</li>
+        <li onmousedown="window.editorFns.onClickAddSbs(event)">
+          Side by side
+        </li>
+      </ul>
+    </div>
+
     <div class="editor">
-      <div id="widget-adder">
-        <button onmousedown="window.editorFns.onClickWidgetAdder(event)">
-          +
-        </button>
-        <ul>
-          <li onmousedown="window.editorFns.onClickAddImage(event)">Image</li>
-          <li onmousedown="window.editorFns.onClickAddSbs(event)">
-            Side by side
-          </li>
-        </ul>
-      </div>
       <h1
         class="undeletable"
         contenteditable="true"
@@ -40,13 +39,6 @@
         onfocus="window.editorFns.onFocusEditor(event)"
         onblur="window.editorFns.onBlurEditor(event)"
       ></p>
-      <div class="image-resizer" onclick="window.editorFns.onClickImage(event)">
-        <img class="image" width="400" src="assets/images/landscape.jpg" />
-        <div class="resize-handle resize-top resize-left"></div>
-        <div class="resize-handle resize-top resize-right"></div>
-        <div class="resize-handle resize-bottom resize-left"></div>
-        <div class="resize-handle resize-bottom resize-right"></div>
-      </div>
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
