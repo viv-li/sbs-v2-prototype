@@ -163,6 +163,7 @@ window.editorFns = {
     const { top, left, height } = e.target.getBoundingClientRect();
     elWA.style.top = `${window.scrollY + top + height / 2}px`;
     elWA.style.left = `${window.scrollX + left - 40}px`;
+    console.log(window.scrollX, left);
 
     window.lastFocussedLine = e.target;
   },
@@ -179,8 +180,24 @@ window.editorFns = {
     const elWA = document.getElementById("widget-adder");
     elWA.classList.toggle("show-menu");
   },
+
+  onClickModalImage: e => {
+    if (window.elImagePlaceholder !== null) {
+      window.editorFns.addImageToImagePlaceholder(e.target.src);
+    } else {
+      window.editorFns.addImageToEditor(e.target.src);
+    }
+
+    $("#image-gallery-modal").modal("toggle");
+  },
+
   onClickAddImage: e => {
     e.preventDefault();
+    window.elImagePlaceholder = null;
+    $("#image-gallery-modal").modal();
+  },
+
+  addImageToEditor: imageUrl => {
     const $imageResizer = $(
       `<div class="image-resizer">
         <div class="resize-handle resize-top resize-left"></div>
@@ -196,10 +213,6 @@ window.editorFns = {
       $imageResizer.addClass("resize-editor");
     }
 
-    let imageUrl = prompt("Enter image url: ");
-    if (imageUrl === null) {
-      return;
-    }
     var elImg = new Image();
     elImg.onload = function() {
       // Get image width and set the resizer to that width
@@ -211,17 +224,19 @@ window.editorFns = {
     $imageResizer.append(elImg);
     $imageResizer.insertBefore(window.lastFocussedLine);
   },
+
   onClickAddSbs: e => {
     e.preventDefault();
     const $sbs = $(
       `<div class="sbs" onclick="window.editorFns.onClickSbs(event)">
         <div class="sbs-left">
-          <h1
+          <h2
+            class="undeletable"
             contenteditable="true"
             onkeydown="window.editorFns.onKeyDownEditor(event)"
             onfocus="window.editorFns.onFocusEditor(event)"
             onblur="window.editorFns.onBlurEditor(event)"
-          ></h1>
+          ></h2>
           <p
             class="undeletable"
             contenteditable="true"
@@ -237,7 +252,7 @@ window.editorFns = {
           >
             <p><img src="assets/icons/images-monotone.svg" /></p>
             <h4>
-              <strike>Drag an image in, or</strike> click to browse images
+              Click to browse images
             </h4>
 
             <img
@@ -267,8 +282,11 @@ window.editorFns = {
 
   onClickImagePlaceholder: e => {
     e.stopPropagation();
-    const elImagePlaceholder = e.target.closest(".image-placeholder");
+    window.elImagePlaceholder = e.target.closest(".image-placeholder");
+    $("#image-gallery-modal").modal();
+  },
 
+  addImageToImagePlaceholder: imageUrl => {
     const $imageResizer = $(
       `<div class="image-resizer resize-sbs">
         <div class="resize-handle resize-top resize-left"></div>
@@ -278,18 +296,15 @@ window.editorFns = {
       </div>`
     );
 
-    let imageUrl = prompt("Enter image url: ");
-    if (imageUrl === null) {
-      return;
-    }
     var elImg = new Image();
     elImg.src = imageUrl;
     elImg.addEventListener("click", window.editorFns.onClickImage);
     $imageResizer.width("472px");
     $imageResizer.append(elImg);
-    $imageResizer.insertAfter(elImagePlaceholder);
-    elImagePlaceholder.remove();
+    $imageResizer.insertAfter(window.elImagePlaceholder);
+    window.elImagePlaceholder.remove();
   },
+
   onClickDeleteImagePlaceholder: e => {
     e.stopPropagation();
     const elImagePlaceholder = e.target.closest(".image-placeholder");

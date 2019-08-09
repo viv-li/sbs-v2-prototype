@@ -16,6 +16,23 @@
 // @import "./styles/Transitions";
 // @import "./styles/Animations";
 
+#image-gallery-modal {
+  .image-gallery {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+      width: 25%;
+      min-width: 200px;
+      flex: 1 1 auto;
+      cursor: pointer;
+    }
+  }
+
+  .modal-lg {max-width: 900px;}
+}
+
 #widget-adder {
   position: relative;
   top: -100px;
@@ -25,13 +42,17 @@
   height: 36px;
   margin-top: -18px;
 
-  button {
+  .button {
     &:before {
       content: '+';
       font-size: 28px;
-      line-height: 0.7;
+      line-height: 14px;
+      display: inline-block;
+      padding: 10px 9px;
     }
-
+    
+    color: @grey;
+    border: 1px solid @grey;
     width: 36px;
     height: 36px;
     border-radius: 18px;
@@ -41,7 +62,7 @@
     &:hover, &:active {
       background-color: @blue;
       color: white;
-      border: none;
+      border-color: @blue;
     }
   }
 
@@ -66,10 +87,10 @@
   }
 
   &.show-menu {
-    button {
+    .button {
       background-color: @blue;
       color: white;
-      border: none;
+      border: 1px solid @blue;
     }
     ul { display: block;}
   }
@@ -84,6 +105,7 @@
 .editor {
   width: 800px;
   margin: auto;
+  padding-bottom: 60px;
   color: @midnight;
 
   img {
@@ -95,9 +117,22 @@
   h1 {
     padding: 0;
     margin-bottom: 16px;
+    color: @emerald;
 
     &:empty:before {
-      content: "I am a prototype";
+      content: "Heading...";
+      opacity: 0.25;
+      position: absolute;
+    }
+  }
+
+  h2 {
+    padding: 0;
+    margin-bottom: 16px;
+    color: @purple;
+
+    &:empty:before {
+      content: "Sub Heading...";
       opacity: 0.25;
       position: absolute;
     }
@@ -105,7 +140,7 @@
   
   p {
     &:empty:before {
-      content: "Please use me kindly";
+      content: "Add some text...";
       opacity: 0.5;
       position: absolute;
     }
