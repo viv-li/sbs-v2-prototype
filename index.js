@@ -75,6 +75,7 @@ window.editorFns = {
     for (let el of document.getElementsByClassName("sbs")) {
       el.classList.remove("selected");
     }
+    window.editorFns.hideDeleteToolbar();
   },
   onClick: e => {
     window.editorFns.unselectAllWidgets();
@@ -110,11 +111,24 @@ window.editorFns = {
   onClickImage: e => {
     e.stopPropagation();
 
-    for (let el of document.getElementsByClassName("sbs")) {
-      el.classList.remove("selected");
-    }
+    window.editorFns.unselectAllWidgets();
 
-    e.target.closest(".image-resizer").classList.toggle("selected");
+    const elImageWidget = e.target.closest(".image-resizer");
+    elImageWidget.classList.toggle("selected");
+    if (elImageWidget.classList.contains("selected")) {
+      window.editorFns.positionDeleteToolbar(elImageWidget);
+    }
+  },
+  positionDeleteToolbar: elWidget => {
+    const elDeleteToolbar = document.getElementById("delete-toolbar");
+    const { top, left, width } = elWidget.getBoundingClientRect();
+    elDeleteToolbar.style.top = `${window.scrollY + top - 40}px`;
+    elDeleteToolbar.style.left = `${window.scrollX + left + width / 2}px`;
+  },
+  hideDeleteToolbar: () => {
+    const elDeleteToolbar = document.getElementById("delete-toolbar");
+    elDeleteToolbar.style.top = "-100px";
+    elDeleteToolbar.style.left = "-100px";
   },
   onKeyDownEditor: e => {
     const key = event.key; // const {key} = event; ES6+
@@ -163,7 +177,6 @@ window.editorFns = {
     const { top, left, height } = e.target.getBoundingClientRect();
     elWA.style.top = `${window.scrollY + top + height / 2}px`;
     elWA.style.left = `${window.scrollX + left - 40}px`;
-    console.log(window.scrollX, left);
 
     window.lastFocussedLine = e.target;
   },
@@ -277,7 +290,7 @@ window.editorFns = {
     );
 
     $sbs.insertBefore(window.lastFocussedLine);
-    $sbs.find("h1").focus();
+    $sbs.find("h2").focus();
   },
 
   onClickImagePlaceholder: e => {
@@ -319,13 +332,24 @@ window.editorFns = {
   onClickSbs: e => {
     e.stopPropagation();
 
-    for (let el of document.getElementsByClassName("image-resizer")) {
-      el.classList.remove("selected");
-    }
+    window.editorFns.unselectAllWidgets();
 
     if (e.target.contentEditable !== "true") {
       const elSbs = e.target.closest(".sbs");
       elSbs.classList.toggle("selected");
+
+      if (elSbs.classList.contains("selected")) {
+        window.editorFns.positionDeleteToolbar(elSbs);
+      }
+    }
+  },
+
+  onClickDeleteToolbar: e => {
+    e.stopPropagation();
+    const selectedWidget = document.querySelector(".selected");
+    if (selectedWidget !== null) {
+      selectedWidget.remove();
+      window.editorFns.hideDeleteToolbar();
     }
   }
 };

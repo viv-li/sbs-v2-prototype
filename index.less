@@ -19,14 +19,19 @@
 #image-gallery-modal {
   .image-gallery {
     width: 100%;
+    display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
 
-    img {
+    .image {
       width: 25%;
       min-width: 200px;
       flex: 1 1 auto;
       cursor: pointer;
+
+      img {
+        width: 100%;
+      }
     }
   }
 
@@ -53,6 +58,7 @@
     
     color: @grey;
     border: 1px solid @grey;
+    background-color: white;
     width: 36px;
     height: 36px;
     border-radius: 18px;
@@ -102,6 +108,22 @@
   }
 }
 
+#delete-toolbar {
+  background-color: @slate;
+  display: inline-block;
+  padding: 8px;
+  border-radius: 4px;
+  line-height: 0;
+  position: absolute;
+  box-shadow: 0 15px 25px 0 fade(@midnight, 10%);
+  z-index: 2;
+  cursor: pointer;
+
+  svg {
+    fill: white;
+  }
+}
+
 .editor {
   width: 800px;
   margin: auto;
@@ -140,15 +162,20 @@
   
   p {
     &:empty:before {
-      content: "Add some text...";
+      content: "+ to add more content";
       opacity: 0.5;
       position: absolute;
     }
   }
   
-  *[contenteditable]:focus {
-    outline: none;
+  *[contenteditable] {
+    cursor: text;
+
+    &:focus {
+      outline: none;
+    }
   }
+
   
   .image-resizer {
     width: fit-content;
@@ -201,6 +228,7 @@
 
   .sbs {
     margin: 24px -120px;
+    display: -webkit-flex;
     display: flex;
     border-radius: 4px;
     position: relative;

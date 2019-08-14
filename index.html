@@ -42,22 +42,30 @@
           </div>
           <div class="modal-body">
             <div class="image-gallery">
-              <img
-                src="/assets/images/profile1.jpeg"
-                onclick="window.editorFns.onClickModalImage(event)"
-              />
-              <img
-                src="/assets/images/profile2.jpeg"
-                onclick="window.editorFns.onClickModalImage(event)"
-              />
-              <img
-                src="/assets/images/profile3.jpeg"
-                onclick="window.editorFns.onClickModalImage(event)"
-              />
-              <img
-                src="/assets/images/profile4.jpeg"
-                onclick="window.editorFns.onClickModalImage(event)"
-              />
+              <div class="image">
+                <img
+                  src="assets/images/profile1.jpeg"
+                  onclick="window.editorFns.onClickModalImage(event)"
+                />
+              </div>
+              <div class="image">
+                <img
+                  src="assets/images/profile2.jpeg"
+                  onclick="window.editorFns.onClickModalImage(event)"
+                />
+              </div>
+              <div class="image">
+                <img
+                  src="assets/images/profile3.jpeg"
+                  onclick="window.editorFns.onClickModalImage(event)"
+                />
+              </div>
+              <div class="image">
+                <img
+                  src="assets/images/profile4.jpeg"
+                  onclick="window.editorFns.onClickModalImage(event)"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -75,6 +83,30 @@
           Side by side
         </li>
       </ul>
+    </div>
+
+    <div
+      id="delete-toolbar"
+      onclick="window.editorFns.onClickDeleteToolbar(event)"
+      style="top: -100px; left: -100px;"
+    >
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+          <path
+            d="M10 10C10 9.44772 10.4477 9 11 9H21C21.5523 9 22 9.44772 22 10V11H10V10Z"
+          />
+          <rect x="14" y="8" width="4" height="2" rx="1" />
+          <path
+            d="M11 12H21V23C21 23.5523 20.5523 24 20 24H12C11.4477 24 11 23.5523 11 23V12Z"
+          />
+        </g>
+      </svg>
     </div>
 
     <div class="editor">
