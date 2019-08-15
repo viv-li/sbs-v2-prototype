@@ -118,6 +118,7 @@
   box-shadow: 0 15px 25px 0 fade(@midnight, 10%);
   z-index: 2;
   cursor: pointer;
+  transform: translateX(-50%);
 
   svg {
     fill: white;
@@ -232,17 +233,41 @@
     display: flex;
     border-radius: 4px;
     position: relative;
+    cursor: pointer;
 
     &.reverse {
       flex-direction: row-reverse;
     }
 
+    &:before  { // this is the middle line
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 100%;
+      background-color: @blue;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+
     &:hover {
       box-shadow: 0 0 0 4px fade(@blue, 25%);
+
+      &:before {
+        opacity: 0.25;
+      }
+
+      .swap-columns-button {
+        opacity: 1;
+      }
     }
 
     &.selected {
       box-shadow: 0 0 0 4px fade(@blue, 50%);
+      
+      &:before {
+        opacity: 0.5;
+      }
     }
 
     .sbs-left, .sbs-right {
@@ -272,18 +297,61 @@
     .swap-columns-button {
       position: absolute;
       width: 45px;
+      height: 45px;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
       cursor: pointer;
-      height: ~"calc(100% - 48px)";
       opacity: 0;
       transition: all 0.15s ease-out;
-      
+
       &:hover {
-        opacity: 1;
+        &:before {
+          content: 'Swap columns';
+          .tooltip;
+        }
       }
     }
   }
 }
 
+.panel-box-shadow {
+  box-shadow: 0 15px 25px 0 fade(@midnight, 10%);
+}
+
+.tooltip {
+  .text-small-label;
+  color: white;
+  background-color: @slate;
+  position: absolute;
+  display: inline-block;
+  white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: 2px;
+  top: -8px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  .panel-box-shadow;
+  .tooltip-animation;
+}
+
+.tooltip-animation {
+  animation: 0.3s ease tooltip-animation;
+  transform-origin: 50%;
+  animation-fill-mode: forwards
+}
+
+@keyframes tooltip-animation {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  5% {
+    transform: translate(-50%, -75%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -100%);
+    opacity: 1;
+  }
+}

@@ -87,6 +87,7 @@ window.editorFns = {
       if (selectedWidget !== null) {
         e.preventDefault();
         selectedWidget.remove();
+        window.editorFns.hideDeleteToolbar();
       }
       return false;
     } else if (key === "Enter") {
@@ -282,10 +283,11 @@ window.editorFns = {
             onblur="window.editorFns.onBlurEditor(event)"
           ></p>
         </div>
-        <img
+        <div
           class="swap-columns-button"
-          src="assets/images/swap-columns-button.svg"
           onclick="window.editorFns.onClickSwapColumnsButton(event)">
+          <img src="assets/images/swap-columns-button.svg">
+        </div>
       </div>`
     );
 
