@@ -229,6 +229,7 @@
   }
 
   .sbs {
+    padding: 8px;
     margin: 24px -120px;
     display: -webkit-flex;
     display: flex;
@@ -240,13 +241,43 @@
     }
     
     .sbs-selector {
+      margin: -8px;
       position: absolute;
       width: 100%;
       height: 100%;
       border-radius: 4px;
+      z-index: 1;
+
+      .swap-columns-button {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.15s ease-out;
+  
+        &:hover {
+          &:before {
+            content: 'Swap columns';
+            .tooltip;
+          }
+        }
+      }
 
       .gutter  {
         width: 45px;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        cursor: col-resize;
+        border-radius: 4px;
+        background-color: transparent;
+        transition: all 0.2s ease-out;
+        
 
         &:before { // this is the divider line
           content: "";
@@ -260,36 +291,21 @@
           opacity: 0;
         }
 
-        .swap-columns-button {
-          position: absolute;
-          width: 45px;
-          height: 45px;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          cursor: pointer;
-          opacity: 0;
-          transition: all 0.15s ease-out;
-          z-index: 1;
-    
-          &:hover {
-            &:before {
-              content: 'Swap columns';
-              .tooltip;
-            }
-          }
+        &:hover {
+          background-color: fade(@blue, 25%);
         }
       }
 
       &:hover {
         box-shadow: 0 0 0 4px fade(@blue, 25%);
+        
+        .swap-columns-button {
+          opacity: 1;
+        }
 
         .gutter {
           &:before {
             opacity: 0.25;
-          }
-          .swap-columns-button {
-            opacity: 1;
           }
         }
       }
@@ -309,8 +325,14 @@
 
     .sbs-left, .sbs-right {
       width: 50%;
-      margin: 8px;
       position: relative;
+      z-index: 2;
+    }
+
+    .sbs-middle {
+      width: 24px;
+      flex: 0 0 auto;
+      z-index: 0;
     }
 
     .image-placeholder {

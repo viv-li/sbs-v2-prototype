@@ -202,15 +202,6 @@ window.editorFns = {
     e.preventDefault();
     const $sbs = $(
       `<div class="sbs" onclick="window.editorFns.onClickSbs(event)">
-        <div class="sbs-selector">
-          <div class="gutter">
-            <div
-              class="swap-columns-button"
-              onclick="window.editorFns.onClickSwapColumnsButton(event)">
-              <img src="assets/images/swap-columns-button.svg">
-            </div>
-          </div>
-        </div>
         <div class="sbs-left">
           <h2
             class="undeletable"
@@ -227,6 +218,7 @@ window.editorFns = {
             onblur="window.editorFns.onBlurEditor(event)"
           ></p>
         </div>
+        <div class="sbs-middle"></div>
         <div class="sbs-right">
           <div
             class="image-placeholder"
@@ -250,6 +242,16 @@ window.editorFns = {
             onfocus="window.editorFns.onFocusEditor(event)"
             onblur="window.editorFns.onBlurEditor(event)"
           ></p>
+        </div>
+
+
+        <div class="sbs-selector">
+          <div class="gutter"></div>
+          <div
+            class="swap-columns-button"
+            onclick="window.editorFns.onClickSwapColumnsButton(event)">
+            <img src="assets/images/swap-columns-button.svg">
+          </div>
         </div>
       </div>`
     );
