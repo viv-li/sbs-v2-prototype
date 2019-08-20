@@ -179,6 +179,7 @@
 
   
   .image-resizer {
+    max-width: 100%;
     width: fit-content;
     position: relative;
     transition: all 0.15s ease-out;
@@ -231,48 +232,85 @@
     margin: 24px -120px;
     display: -webkit-flex;
     display: flex;
-    border-radius: 4px;
     position: relative;
     cursor: pointer;
-
+    
     &.reverse {
       flex-direction: row-reverse;
     }
-
-    &:before  { // this is the middle line
-      content: "";
+    
+    .sbs-selector {
       position: absolute;
-      width: 4px;
+      width: 100%;
       height: 100%;
-      background-color: @blue;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-    }
+      border-radius: 4px;
 
-    &:hover {
-      box-shadow: 0 0 0 4px fade(@blue, 25%);
+      .gutter  {
+        width: 45px;
 
-      &:before {
-        opacity: 0.25;
+        &:before { // this is the divider line
+          content: "";
+          position: absolute;
+          width: 4px;
+          margin: auto;
+          height: 100%;
+          background-color: @blue;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+        }
+
+        .swap-columns-button {
+          position: absolute;
+          width: 45px;
+          height: 45px;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          cursor: pointer;
+          opacity: 0;
+          transition: all 0.15s ease-out;
+          z-index: 1;
+    
+          &:hover {
+            &:before {
+              content: 'Swap columns';
+              .tooltip;
+            }
+          }
+        }
       }
 
-      .swap-columns-button {
-        opacity: 1;
+      &:hover {
+        box-shadow: 0 0 0 4px fade(@blue, 25%);
+
+        .gutter {
+          &:before {
+            opacity: 0.25;
+          }
+          .swap-columns-button {
+            opacity: 1;
+          }
+        }
       }
     }
 
     &.selected {
-      box-shadow: 0 0 0 4px fade(@blue, 50%);
-      
-      &:before {
-        opacity: 0.5;
+      .sbs-selector {
+        box-shadow: 0 0 0 4px fade(@blue, 50%);
+        
+        .gutter {
+          &:before {
+            opacity: 0.5;
+          }
+        }
       }
     }
 
     .sbs-left, .sbs-right {
       width: 50%;
-      padding: 24px;
+      margin: 8px;
+      position: relative;
     }
 
     .image-placeholder {
@@ -291,25 +329,6 @@
         position: absolute;
         top: 0;
         right: 0;
-      }
-    }
-
-    .swap-columns-button {
-      position: absolute;
-      width: 45px;
-      height: 45px;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      opacity: 0;
-      transition: all 0.15s ease-out;
-
-      &:hover {
-        &:before {
-          content: 'Swap columns';
-          .tooltip;
-        }
       }
     }
   }

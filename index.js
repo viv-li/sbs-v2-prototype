@@ -1,4 +1,4 @@
-interact(".resize-editor")
+interact(".image-resizer")
   .resizable({
     edges: {
       top: ".resize-top",
@@ -17,41 +17,6 @@ interact(".resize-editor")
     inertia: true
   })
   .on("resizemove", function(event) {
-    var target = event.target;
-    var x = parseFloat(target.getAttribute("data-x")) || 0;
-    var y = parseFloat(target.getAttribute("data-y")) || 0;
-
-    // update the element's style
-    target.style.width = event.rect.width + "px";
-
-    // translate when resizing from top or left edges
-    x += event.deltaRect.left;
-    y += event.deltaRect.top;
-
-    target.style.webkitTransform = target.style.transform =
-      "translate(" + x + "px," + y + "px)";
-  });
-
-interact(".resize-sbs")
-  .resizable({
-    edges: {
-      top: ".resize-top",
-      left: ".resize-left",
-      bottom: ".resize-bottom",
-      right: ".resize-right"
-    },
-
-    modifiers: [
-      interact.modifiers.restrictSize({
-        min: { width: 50 },
-        max: { width: 472 }
-      })
-    ],
-
-    inertia: true
-  })
-  .on("resizemove", function(event) {
-    console.log(event);
     var target = event.target;
     var x = parseFloat(target.getAttribute("data-x")) || 0;
     var y = parseFloat(target.getAttribute("data-y")) || 0;
@@ -221,12 +186,6 @@ window.editorFns = {
       </div>`
     );
 
-    if (window.lastFocussedLine.closest(".sbs") !== null) {
-      $imageResizer.addClass("resize-sbs");
-    } else {
-      $imageResizer.addClass("resize-editor");
-    }
-
     var elImg = new Image();
     elImg.onload = function() {
       // Get image width and set the resizer to that width
@@ -243,6 +202,15 @@ window.editorFns = {
     e.preventDefault();
     const $sbs = $(
       `<div class="sbs" onclick="window.editorFns.onClickSbs(event)">
+        <div class="sbs-selector">
+          <div class="gutter">
+            <div
+              class="swap-columns-button"
+              onclick="window.editorFns.onClickSwapColumnsButton(event)">
+              <img src="assets/images/swap-columns-button.svg">
+            </div>
+          </div>
+        </div>
         <div class="sbs-left">
           <h2
             class="undeletable"
@@ -282,11 +250,6 @@ window.editorFns = {
             onfocus="window.editorFns.onFocusEditor(event)"
             onblur="window.editorFns.onBlurEditor(event)"
           ></p>
-        </div>
-        <div
-          class="swap-columns-button"
-          onclick="window.editorFns.onClickSwapColumnsButton(event)">
-          <img src="assets/images/swap-columns-button.svg">
         </div>
       </div>`
     );
