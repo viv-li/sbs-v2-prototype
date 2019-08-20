@@ -241,10 +241,11 @@
     }
     
     .sbs-selector {
-      margin: -8px;
       position: absolute;
-      width: 100%;
-      height: 100%;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
       border-radius: 4px;
       z-index: 1;
 
@@ -276,7 +277,7 @@
         cursor: col-resize;
         border-radius: 4px;
         background-color: transparent;
-        transition: all 0.2s ease-out;
+        transition: all 0.15s ease-out;
         
 
         &:before { // this is the divider line
@@ -292,7 +293,7 @@
         }
 
         &:hover {
-          background-color: fade(@blue, 25%);
+          background-color: fade(@blue, 15%);
         }
       }
 
@@ -325,12 +326,12 @@
 
     .sbs-left, .sbs-right {
       width: 50%;
-      position: relative;
+      flex: 1 1 auto;
       z-index: 2;
     }
 
     .sbs-middle {
-      width: 24px;
+      width: 48px;
       flex: 0 0 auto;
       z-index: 0;
     }
