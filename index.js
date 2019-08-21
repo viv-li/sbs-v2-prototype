@@ -225,7 +225,9 @@ window.editorFns = {
           <div
             class="swap-columns-button"
             onclick="window.editorFns.onClickSwapColumnsButton(event)">
-            <img src="assets/images/swap-columns-button.svg">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 9L5 13L10 17V14H17.9999V12H10V9ZM21.9999 15L26.9999 19L21.9999 23V20H13.9999V18H21.9999V15Z"/>
+            </svg>          
           </div>
         </div>
         <div class="sbs-right">
