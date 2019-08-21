@@ -42,7 +42,7 @@
   position: relative;
   top: -100px;
   left: -100px;
-  z-index: 2;
+  z-index: 5;
   width: 36px;
   height: 36px;
   margin-top: -18px;
@@ -248,67 +248,10 @@
       bottom: 0;
       border-radius: 4px;
       z-index: 1;
-
-      .swap-columns-button {
-        position: absolute;
-        width: 45px;
-        height: 45px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        cursor: pointer;
-        opacity: 0;
-        transition: all 0.15s ease-out;
-  
-        &:hover {
-          &:before {
-            content: 'Swap columns';
-            .tooltip;
-          }
-        }
-      }
-
-      .gutter  {
-        width: 45px;
-        height: 100%;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        cursor: col-resize;
-        border-radius: 4px;
-        background-color: transparent;
-        transition: all 0.15s ease-out;
-        
-
-        &:before { // this is the divider line
-          content: "";
-          position: absolute;
-          width: 4px;
-          margin: auto;
-          height: 100%;
-          background-color: @blue;
-          left: 50%;
-          transform: translateX(-50%);
-          opacity: 0;
-        }
-
-        &:hover {
-          background-color: fade(@blue, 15%);
-        }
-      }
+      transition: all 0.15s ease-out;
 
       &:hover {
         box-shadow: 0 0 0 4px fade(@blue, 25%);
-        
-        .swap-columns-button {
-          opacity: 1;
-        }
-
-        .gutter {
-          &:before {
-            opacity: 0.25;
-          }
-        }
       }
     }
 
@@ -325,15 +268,79 @@
     }
 
     .sbs-left, .sbs-right {
-      width: 50%;
-      flex: 1 1 auto;
+      width: 488px;
       z-index: 2;
     }
 
     .sbs-middle {
       width: 48px;
-      flex: 0 0 auto;
-      z-index: 0;
+      z-index: 3;
+      position: relative;
+      
+      &:before { // this is the divider line
+        content: "";
+        position: absolute;
+        width: 4px;
+        margin: auto;
+        height: 100%;
+        background-color: @blue;
+        left: 50%;
+        top: -8px;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: all 0.15s ease-out;
+      }
+
+      .gutter  {
+        width: 60px;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: -8px;
+        transform: translateX(-50%);
+        cursor: col-resize;
+        border-radius: 4px;
+        background-color: transparent;
+        transition: all 0.15s ease-out;
+
+        &:hover {
+          background-color: fade(@blue, 10%);
+          transition-delay: 0.3s;    
+        }
+      }
+
+      .swap-columns-button {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.15s ease-out;
+        
+        &:hover {
+          &:before {
+            content: 'Swap columns';
+            .tooltip;
+          }
+        }
+      }
+
+      &:hover {
+        &:before {
+          opacity: 0.25;
+        }
+
+        .swap-columns-button {
+          opacity: 0.75;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
     }
 
     .image-placeholder {
@@ -380,7 +387,8 @@
 .tooltip-animation {
   animation: 0.3s ease tooltip-animation;
   transform-origin: 50%;
-  animation-fill-mode: forwards
+  animation-fill-mode: both;
+  animation-delay: 0.3s;
 }
 
 @keyframes tooltip-animation {
